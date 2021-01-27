@@ -1,17 +1,51 @@
 {
   "name": "pubsub",
   "version": "1.0.0",
-  "description": "",
+  "description": "Notification service",
   "main": "subscription.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:publisher": "npm-run-all build run:pub",
+    "start:subscriber": "npm-run-all build run:sub",
+    "run:sub": "node ./dist/subscriber.js",
+    "run:pub": "node ./dist/publisher.js",
+    "transpile": "babel ./server --out-dir dist",
+    "clean": "rimraf dist-server",
+    "build": "npm-run-all clean transpile",
+    "watch:dev": "nodemon"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "@google-cloud/pubsub": "^2.8.0",
+    "async-retry": "^1.3.1",
+    "babel-core": "^6.0.20",
+    "babel-polyfill": "^6.0.16",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^4.4.1"
+    "helmet": "^4.4.1",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2"
+  },
+  "nodemonConfig": {
+    "exec": "npm run start:publisher",
+    "watch": [
+      "server/*"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.0-beta.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }
